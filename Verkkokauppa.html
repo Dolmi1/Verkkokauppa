@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yksinkertainen Verkkokauppa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product" id="product1">
+    <h3>Tuote 1</h3>
+    <p>Hinta: $10.00</p>
+    <button onclick="lisaaKoriin(1)">Lisää koriin</button>
+</div>
+
+<div class="product" id="product2">
+    <h3>Tuote 2</h3>
+    <p>Hinta: $15.00</p>
+    <button onclick="lisaaKoriin(2)">Lisää koriin</button>
+</div>
+
+<div class="product" id="product3">
+    <h3>Tuote 3</h3>
+    <p>Hinta: $20.00</p>
+    <button onclick="lisaaKoriin(3)">Lisää koriin</button>
+</div>
+
+<div class="product" id="product4">
+    <h3>Tuote 4</h3>
+    <p>Hinta: $25.00</p>
+    <button onclick="lisaaKoriin(4)">Lisää koriin</button>
+</div>
+
+<h2>Ostoskori</h2>
+<ul id="ostoskori">
+</ul>
+
+<script>
+    let ostoskori = [];
+
+    function lisaaKoriin(tuoteId) {
+        // Tässä voisi olla logiikkaa tuotteen lisäämiseksi ostoskoriin
+        ostoskori.push(tuoteId);
+
+        // Päivitä ostoskorin näyttö
+        paivitaOstoskorinNaytto();
+    }
+
+    function paivitaOstoskorinNaytto() {
+        let ostoskoriElementti = document.getElementById("ostoskori");
+        ostoskoriElementti.innerHTML = "";
+
+        for (let tuoteId of ostoskori) {
+            let tuoteElementti = document.createElement("li");
+            tuoteElementti.textContent = `Tuote ${tuoteId}`;
+            ostoskoriElementti.appendChild(tuoteElementti);
+        }
+    }
+</script>
+
+</body>
+</html>
