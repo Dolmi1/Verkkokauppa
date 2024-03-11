@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tuotesivu</title>
+    <title>Verkkokauppa</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -13,27 +13,16 @@
     
     <div id="tuotteet">
         <!-- Tähän tulee tuotteiden listausta -->
+        <div th:each="tuote : ${tuotteet}">
+            <p><strong>Tuotetunnus:</strong> <span th:text="${tuote.productId}"></span></p>
+            <p><strong>Nimi:</strong> <span th:text="${tuote.name}"></span></p>
+            <p><strong>Hinta:</strong> <span th:text="${tuote.price}"></span></p>
+            <p><strong>Määrä:</strong> <span th:text="${tuote.quantity}"></span></p>
+            <hr>
+        </div>
     </div>
 
     <script>
-        // Haetaan tuotteet REST-rajapinnasta ja näytetään ne sivulla
-        fetch('/api/tuotteet')
-            .then(response => response.json())
-            .then(tuotteet => {
-                const tuotteetElement = document.getElementById('tuotteet');
-                tuotteet.forEach(tuote => {
-                    const tuoteDiv = document.createElement('div');
-                    tuoteDiv.innerHTML = `
-                        <p><strong>Tuotetunnus:</strong> ${tuote.productId}</p>
-                        <p><strong>Nimi:</strong> ${tuote.name}</p>
-                        <p><strong>Hinta:</strong> ${tuote.price}</p>
-                        <p><strong>Määrä:</strong> ${tuote.quantity}</p>
-                        <hr>
-                    `;
-                    tuotteetElement.appendChild(tuoteDiv);
-                });
-            })
-            .catch(error => console.error('Virhe haettaessa tuotteita:', error));
     </script>
 </body>
 
