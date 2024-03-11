@@ -4,13 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verkkokauppa</title>
+    <title>Tuotesivu</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-    
+
 <body>
+    <h1>Tervetuloa Tuotesivu</h1>
+    
+    <div id="tuotteet">
+        <!-- Tähän tulee tuotteiden listausta -->
+    </div>
 
+    <script>
+        // Haetaan tuotteet REST-rajapinnasta ja näytetään ne sivulla
+        fetch('/api/tuotteet')
+            .then(response => response.json())
+            .then(tuotteet => {
+                const tuotteetElement = document.getElementById('tuotteet');
+                tuotteet.forEach(tuote => {
+                    const tuoteDiv = document.createElement('div');
+                    tuoteDiv.innerHTML = `
+                        <p><strong>Tuotetunnus:</strong> ${tuote.productId}</p>
+                        <p><strong>Nimi:</strong> ${tuote.name}</p>
+                        <p><strong>Hinta:</strong> ${tuote.price}</p>
+                        <p><strong>Määrä:</strong> ${tuote.quantity}</p>
+                        <hr>
+                    `;
+                    tuotteetElement.appendChild(tuoteDiv);
+                });
+            })
+            .catch(error => console.error('Virhe haettaessa tuotteita:', error));
+    </script>
 </body>
-
 
 </html>
