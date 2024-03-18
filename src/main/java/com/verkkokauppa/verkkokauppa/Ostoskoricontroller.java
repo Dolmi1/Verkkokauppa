@@ -1,57 +1,55 @@
 package com.verkkokauppa.verkkokauppa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-public class Ostoskoricontroller {
-    private ProductService productService;
+import java.util.List;
+
+@RestController
+@RequestMapping("/ostoskori")
+public class OstoskoriController {
+
+    private final OstoskoriRepository ostoskoriRepository;
 
     @Autowired
-    private Ostoskorirepository ostoskorirepository;
-
-    // Lisää tuote ostoskoriin
-    @PostMapping("/{tuoteId}/lisaa")
-    public void lisaaTuoteOstoskoriin(@PathVariable String tuoteId, @RequestParam int maara) {
-        // Etsi tuote tietokannasta
-        long productId = Long.parseLong(tuoteId);
-        Tuote tuote = productService.findProductById(productId).orElse(null);
-
-        if (tuote != null) {
-            // Lisää tuote ostoskoriin
-            Ostoskori ostoskori = new Ostoskori();
-            ostoskori.lisaaTuote(tuote, maara);
-
-            // Tallenna ostoskori tietokantaan
-            ostoskorirepository.save(ostoskori);
-        }
+    public OstoskoriController(OstoskoriRepository ostoskoriRepository) {
+        this.ostoskoriRepository = ostoskoriRepository;
     }
 
-    // Poista tuote ostoskorista
-    @DeleteMapping("/{tuoteId}/poista")
-    public void poistaTuoteOstoskorista(@PathVariable String tuoteId, @RequestParam int maara) {
-        // Etsi tuote tietokannasta
-        long productId = Long.parseLong(tuoteId);
-        Tuote tuote = productService.findProductById(productId).orElse(null);
-
-        if (tuote != null) {
-            // Poista tuote ostoskorista
-            Ostoskori ostoskori = new Ostoskori();
-            ostoskori.poistaTuote(tuote, maara);
-
-            // Tallenna ostoskori tietokantaan
-            ostoskorirepository.save(ostoskori);
-        }
+    // Hae kaikki ostoskorit
+    @GetMapping
+    public List<Ostoskori> haeKaikkiOstoskorit() {
+        return ostoskoriRepository.findAll();
     }
 
-    // Hae ostoskori
+    // Hae tietty ostoskori
     @GetMapping("/{id}")
-    public Ostoskori haeOstoskori(@PathVariable String id) {
-        long ostoskoriId = Long.parseLong(id);
-        return ostoskorirepository.findById(ostoskoriId).orElse(null);
+    public Ostoskori haeOstoskori(@PathVariable Long id) {
+        return ostoskoriRepository.findById(id).orElse(null);
+    }
+
+    // Lisää uusi ostoskori
+    @PostMapping
+    public Ostoskori lisaaOstoskori(@RequestBody Ostoskori ostoskori) {
+        return ostoskoriRepository.save(ostoskori);
+    }
+
+    // Päivitä olemassa oleva ostoskori
+    @PutMapping("/{id}")
+    public Ostoskori paivitaOstoskori(@PathVariable Long id, @RequestBody Ostoskori uusiOstoskori) {
+        return ostoskoriRepository.findById(id)
+                .map(ostoskori -> {
+                    ostoskori.setTuoteNimi(uusiOstoskori.getTuoteNimi());
+                    ostoskori.setTuoteHinta(uusiOstoskori.getTuoteHinta());
+                    ostoskori.setTuoteMaara(uusiOstoskori.getTuoteMaara());
+                    return ostoskoriRepository.save(ostoskori);
+                })
+                .orElse(null);
+    }
+
+    // Poista olemassa oleva ostoskori
+    @DeleteMapping("/{id}")
+    public void poistaOstoskori(@PathVariable Long id) {
+        ostoskoriRepository.deleteById(id);
     }
 }
