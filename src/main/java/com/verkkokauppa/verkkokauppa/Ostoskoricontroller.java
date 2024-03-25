@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ostoskori")
+// OstoskoriController
 public class OstoskoriController {
 
     private final OstoskoriRepository ostoskoriRepository;
