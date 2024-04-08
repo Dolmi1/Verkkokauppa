@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Tuote extends AbstractPersistable<Long>{
 
+    /*Tuotetiedot*/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long productId;
