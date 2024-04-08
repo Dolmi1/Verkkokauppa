@@ -11,19 +11,11 @@
 <body>
     <h1>Tervetuloa Tuotesivulle</h1>
     
-    <div id="tuotteet">
-        <!-- Tähän tulee tuotteiden listausta -->
-        <div th:each="tuote : ${tuotteet}">
+        <div>
             <p><strong>Tuotetunnus:</strong> <span th:text="${tuote.productId}"></span></p>
             <p><strong>Nimi:</strong> <span th:text="${tuote.name}"></span></p>
-            <p><strong>Hinta:</strong> <span th:text="${tuote.price}"></span></p>
-            <p><strong>Määrä:</strong> <span th:text="${tuote.quantity}"></span></p>
-            <hr>
+            <p><strong>Hinta:</strong> <span th:text="${tuote.price}">Hinta</span></p>
+            <p><strong>Määrä:</strong> <span th:text="${tuote.quantity}">Määrä</span></p>
         </div>
-    </div>
-
-    <script>
-    </script>
 </body>
-
 </html>
