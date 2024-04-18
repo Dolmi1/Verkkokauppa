@@ -17,6 +17,7 @@
                 <th>TuoteNimi</th>
                 <th>TuoteHinta</th>
                 <th>TuoteMaara</th>
+                <th>Toiminnot</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,12 @@
                 <td th:text="${ostos.tuoteNimi}"></td>
                 <td th:text="${ostos.tuoteHinta}"></td>
                 <td th:text="${ostos.tuoteMaara}"></td>
+                <td>
+                    <form th:action="@{'/ostoskori/poista-tuote/' + ${ostos.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit">Poista</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
