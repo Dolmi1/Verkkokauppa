@@ -55,8 +55,9 @@ public class OstoskoriController {
         ostoskoriRepository.deleteById(id);
     }
 
-    // Lisää tuote ostoskoriin
-    @PostMapping("/lisaa-tuote")
+    // Lisää tuote ostoskoriin              <!-- Tiedonsiirron tyyppi on määritetty application/x-www-form-urlencoded -muotoon. 
+                                            //Esimerkiksi, avain "tuoteId" ja sen arvo "123" muunnetaan muotoon "tuoteId=123 -->
+    @PostMapping(value = "/lisaa-tuote", consumes = "application/x-www-form-urlencoded") 
     public Ostoskori lisaaTuoteOstoskoriin(@RequestParam Long tuoteId) {
         Tuote tuote = tuoteRepository.findById(tuoteId).orElse(null); // Etsi tuote tietokannasta
         if (tuote != null) {

@@ -22,11 +22,10 @@
                 <p><strong>Määrä:</strong> <span th:text="${product.quantity}"></span></p>
                 
                 <!-- Lisää ostoskorin lisäämisnappi -->
-                <form action="/ostoskori" method="post">
-                    <input type="hidden" name="productId" th:value="${product.productId}">
+                <form action="/ostoskori/lisaa-tuote" method="post" enctype="application/x-www-form-urlencoded">   <!-- Tiedonsiirron tyyppi on määritetty application/x-www-form-urlencoded -muotoon -->
+                    <input type="hidden" name="tuoteId" th:value="${product.productId}">
                     <button type="submit">Lisää ostoskoriin</button>
                 </form>
-                
             </li>
         </ul>
     </div>
