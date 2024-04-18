@@ -21,10 +21,10 @@
         </thead>
         <tbody>
             <!-- Käytä Thymeleafia toistamaan jokainen ostoskorin tuote -->
-            <tr th:each="tuote : ${ostoskoriList}">
-                <td th:text="${tuote.name}"></td>
-                <td th:text="${tuote.price}"></td>
-                <td th:text="${tuote.quantity}"></td>
+            <tr th:each="ostos : ${ostoskoriList}">
+                <td th:text="${ostos.tuoteNimi}"></td>
+                <td th:text="${ostos.tuoteHinta}"></td>
+                <td th:text="${ostos.tuoteMaara}"></td>
             </tr>
         </tbody>
     </table>

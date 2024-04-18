@@ -1,21 +1,15 @@
 package com.verkkokauppa.verkkokauppa;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-@RestController
-@RequestMapping("/api/products") // Base URL for all operations related to products
+@Controller
+@RequestMapping("/tuoteSivu")
 public class TuoteController {
 
     private final ProductService productService;
@@ -27,43 +21,42 @@ public class TuoteController {
 
     // Endpoint to add a new product
     @PostMapping
-    public ResponseEntity<Tuote> addProduct(@RequestBody Tuote product) {
-        Tuote newProduct = productService.addProduct(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+    public String addProduct(@ModelAttribute("tuote") Tuote product) {
+        productService.addProduct(product);
+        return "redirect:/tuoteSivu";
     }
 
     // Endpoint to get all products
     @GetMapping
-    public ResponseEntity<List<Tuote>> getAllProducts() {
+    public String getAllProducts(Model model) {
         List<Tuote> products = productService.findAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        model.addAttribute("products", products);
+        return "tuoteSivu";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tuote> getProductById(@PathVariable Long id) {
+    public String getProductById(@PathVariable Long id, Model model) {
         Optional<Tuote> productOptional = productService.findProductById(id);
-        
+
         if (productOptional.isPresent()) {
-            return new ResponseEntity<>(productOptional.get(), HttpStatus.OK);
+            model.addAttribute("product", productOptional.get());
+            return "tuoteSivu";
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return "notFound"; // Create a notFound.html page or redirect to an appropriate error page
         }
     }
-    
 
     // Endpoint to update a product
     @PutMapping("/{id}")
-    public ResponseEntity<Tuote> updateProduct(@PathVariable Long id, @RequestBody Tuote product) {
-        Tuote updatedProduct = productService.updateProduct(id, product);
-        return updatedProduct != null ? new ResponseEntity<>(updatedProduct, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public String updateProduct(@PathVariable Long id, @ModelAttribute("tuote") Tuote product) {
+        productService.updateProduct(id, product);
+        return "redirect:/tuoteSivu";
     }
 
     // Endpoint to delete a product
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        boolean isDeleted = productService.deleteProduct(id);
-        return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/tuoteSivu";
     }
-
-    // Additional endpoints as needed
 }

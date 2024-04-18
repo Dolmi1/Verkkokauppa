@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,26 @@
 
 <body>
     <h1>Tervetuloa Tuotesivulle</h1>
-    
-        <div>
-            <p><strong>Tuotetunnus:</strong> <span th:text="${tuote.productId}"></span></p>
-            <p><strong>Nimi:</strong> <span th:text="${tuote.name}"></span></p>
-            <p><strong>Hinta:</strong> <span th:text="${tuote.price}">Hinta</span></p>
-            <p><strong>Määrä:</strong> <span th:text="${tuote.quantity}">Määrä</span></p>
-        </div>
+
+    <!-- Näytä tuotteet -->
+    <div th:if="${not #lists.isEmpty(products)}">
+        <h2>Tuotteet</h2>
+        <ul>
+            <li th:each="product : ${products}">
+                <p><strong>Tuotetunnus:</strong> <span th:text="${product.productId}"></span></p>
+                <p><strong>Nimi:</strong> <span th:text="${product.name}"></span></p>
+                <p><strong>Hinta:</strong> <span th:text="${product.price}"></span></p>
+                <p><strong>Määrä:</strong> <span th:text="${product.quantity}"></span></p>
+                
+                <!-- Lisää ostoskorin lisäämisnappi -->
+                <form action="/ostoskori" method="post">
+                    <input type="hidden" name="productId" th:value="${product.productId}">
+                    <button type="submit">Lisää ostoskoriin</button>
+                </form>
+                
+            </li>
+        </ul>
+    </div>
 </body>
+
 </html>

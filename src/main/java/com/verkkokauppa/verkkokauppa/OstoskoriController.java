@@ -7,14 +7,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ostoskori")
-// OstoskoriController
 public class OstoskoriController {
 
     private final OstoskoriRepository ostoskoriRepository;
+    private final TuoteRepository tuoteRepository; // Lisätty tuoterepo
 
     @Autowired
-    public OstoskoriController(OstoskoriRepository ostoskoriRepository) {
+    public OstoskoriController(OstoskoriRepository ostoskoriRepository, TuoteRepository tuoteRepository) {
         this.ostoskoriRepository = ostoskoriRepository;
+        this.tuoteRepository = tuoteRepository;
     }
 
     // Hae kaikki ostoskorit
@@ -52,5 +53,19 @@ public class OstoskoriController {
     @DeleteMapping("/{id}")
     public void poistaOstoskori(@PathVariable Long id) {
         ostoskoriRepository.deleteById(id);
+    }
+
+    // Lisää tuote ostoskoriin
+    @PostMapping("/lisaa-tuote")
+    public Ostoskori lisaaTuoteOstoskoriin(@RequestParam Long tuoteId) {
+        Tuote tuote = tuoteRepository.findById(tuoteId).orElse(null); // Etsi tuote tietokannasta
+        if (tuote != null) {
+            Ostoskori ostoskori = new Ostoskori();
+            ostoskori.setTuoteNimi(tuote.getName());
+            ostoskori.setTuoteHinta(tuote.getPrice());
+            ostoskori.setTuoteMaara(1); // Oletetaan, että lisätään yksi kappale tuotetta
+            return ostoskoriRepository.save(ostoskori);
+        }
+        return null; // Palauta null, jos tuotetta ei löydy
     }
 }
