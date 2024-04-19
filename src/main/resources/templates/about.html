@@ -1,47 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verkkokauppa</title>
     <link rel="stylesheet" href="styles.css" />
-  </head>
+</head>
 
 <body>
     <header>
         <h1>Verkkokauppa</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="register.html">Register</a></li> <!-- Added register link -->
-                <li><a href="#">asd</a></li>
-                <li><a href="#">asd</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=your-email@example.com&item_name=Product%20Name&amount=25.00&currency_code=USD" target="_blank">
-                    Pay Now with PayPal</a>
-            </ul>
-        </nav>
     </header>
 
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About us</a></li>
+            <li><a th:href="@{/register}">Register</a></li>
+            <li><a href="#">asd</a></li>
+            <li><a href="#">asd</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a th:href="@{https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=your-email@example.com
+                    &amp;item_name=Product%20Name&amp;amount=25.00&amp;currency_code=USD}" target="_blank">Pay Now with PayPal</a></li>
+        </ul>
+    </nav>
+
     <main>
-        <!-- Your main content goes here -->
         <section class="hero">
             <div class="container">
-              <h1>Who are we?</h1>
-              <p>
-                blablabla.
-              </p>
-              <a href="https://www.google.com/" class="btn">Most common questions.</a>
+                <h1>Who are we?</h1>
+                <p>blablabla.</p>
+                <a href="https://www.google.com/" class="btn">Most common questions.</a>
             </div>
-      
-            <p>
-              blablblablablablalbalba.
-            </p>
-          </section>
-        
+
+            <p>blablblablablablalbalba.</p>
+        </section>
     </main>
 
     <footer>

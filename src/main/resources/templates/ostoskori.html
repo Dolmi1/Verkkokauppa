@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ostoskori</title>
+</head>
+
+<body>
+    <h1>Ostoskori</h1>
+    
+    <!-- Ostoskorin tiedot -->
+    <table>
+        <thead>
+            <tr>
+                <th>TuoteNimi</th>
+                <th>TuoteHinta</th>
+                <th>TuoteMaara</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Käytä Thymeleafia toistamaan jokainen ostoskorin tuote -->
+            <tr th:each="tuote : ${ostoskoriList}">
+                <td th:text="${tuote.name}"></td>
+                <td th:text="${tuote.price}"></td>
+                <td th:text="${tuote.quantity}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

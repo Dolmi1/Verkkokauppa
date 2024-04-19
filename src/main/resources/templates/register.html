@@ -1,6 +1,5 @@
-<!-- register.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -12,25 +11,26 @@
 <body>
     <header>
         <h1>Verkkokauppa</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="register.html">Register</a></li> <!-- Added register link -->
-                <li><a href="#">asd</a></li>
-                <li><a href="#">asd</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=your-email@example.com&item_name=Product%20Name&amount=25.00&currency_code=USD" target="_blank">
-                    Pay Now with PayPal</a>
-            </ul>
-        </nav>
     </header>
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About us</a></li>
+            <li><a th:href="@{/register}">Register</a></li>
+            <li><a href="#">asd</a></li>
+            <li><a href="#">asd</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a th:href="@{https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=your-email@example.com
+                    &amp;item_name=Product%20Name&amp;amount=25.00&amp;currency_code=USD}" target="_blank">Pay Now with PayPal</a></li>
+        </ul>
+    </nav>
 
     <main>
         <div class="register-container">
             <h2>Register</h2>
-            <form action="register.php" method="post">
+            <form>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
