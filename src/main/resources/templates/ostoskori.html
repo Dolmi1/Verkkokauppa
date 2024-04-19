@@ -11,20 +11,42 @@
     <h1>Ostoskori</h1>
     
     <!-- Ostoskorin tiedot -->
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About us</a></li>
+            <li><a th:href="@{/register}">Register</a></li>
+            <li><a th:href="@{/tuoteSivu}">Tuotteet</a></li>
+            <li><a th:href="@{/ostoskori}">Ostoskori</a></li>
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a th:href="@{https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=your-email@example.com
+                    &amp;item_name=Product%20Name&amp;amount=25.00&amp;currency_code=USD}" target="_blank">Pay Now with PayPal</a></li>
+        </ul>
+    </nav>
+    
     <table>
         <thead>
             <tr>
                 <th>TuoteNimi</th>
                 <th>TuoteHinta</th>
                 <th>TuoteMaara</th>
+                <th>Toiminnot</th>
             </tr>
         </thead>
         <tbody>
             <!-- Käytä Thymeleafia toistamaan jokainen ostoskorin tuote -->
-            <tr th:each="tuote : ${ostoskoriList}">
-                <td th:text="${tuote.name}"></td>
-                <td th:text="${tuote.price}"></td>
-                <td th:text="${tuote.quantity}"></td>
+            <tr th:each="ostos : ${ostoskoriList}">
+                <td th:text="${ostos.tuoteNimi}"></td>
+                <td th:text="${ostos.tuoteHinta}"></td>
+                <td th:text="${ostos.tuoteMaara}"></td>
+                <td>
+                    <form th:action="@{'/ostoskori/poista-tuote/' + ${ostos.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit">Poista</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
