@@ -11,8 +11,7 @@
 <body>
     <h1>Ostoskori</h1>
     
-    <!-- Ostoskorin tiedot -->
-
+    <!-- Navigation -->
     <nav>
         <ul>
             <li><a th:href="@{/}">Home</a></li>
@@ -22,11 +21,14 @@
             <li><a th:href="@{/ostoskori}">Ostoskori</a></li>
             <li><a th:href="@{/login}">Login</a></li>
             <li><a href="#">Dashboard</a></li>
-            <li><a th:href="@{https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=your-email@example.com
-                    &amp;item_name=Product%20Name&amp;amount=25.00&amp;currency_code=USD}" target="_blank">Pay Now with PayPal</a></li>
+            <li>
+                <a th:href="@{https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=your-email@example.com
+                    &amp;item_name=Product%20Name&amp;amount=25.00&amp;currency_code=USD}" target="_blank">Pay Now with PayPal</a>
+            </li>
         </ul>
     </nav>
     
+    <!-- Shopping cart items -->
     <table>
         <thead>
             <tr>
@@ -37,12 +39,13 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Käytä Thymeleafia toistamaan jokainen ostoskorin tuote -->
+            <!-- Iterate over each item in the shopping cart -->
             <tr th:each="ostos : ${ostoskoriList}">
                 <td th:text="${ostos.tuoteNimi}"></td>
                 <td th:text="${ostos.tuoteHinta}"></td>
                 <td th:text="${ostos.tuoteMaara}"></td>
                 <td>
+                    <!-- Form for removing the item from the shopping cart -->
                     <form th:action="@{'/ostoskori/poista-tuote/' + ${ostos.id}}" method="post">
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit">Poista</button>
@@ -51,6 +54,11 @@
             </tr>
         </tbody>
     </table>
+    
+    <!-- Button for purchasing all items in the shopping cart -->
+    <form th:action="@{/ostoskori/osta-tuotteet}" method="post">
+        <button type="submit">Osta Tuotteet</button>
+    </form>
 </body>
 
 </html>

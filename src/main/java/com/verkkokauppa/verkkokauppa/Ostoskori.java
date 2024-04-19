@@ -20,5 +20,6 @@ public class Ostoskori extends AbstractPersistable<Long>{
     private String TuoteNimi;
     private double TuoteHinta;
     private int TuoteMaara;
+    private Long productId;
 
 }

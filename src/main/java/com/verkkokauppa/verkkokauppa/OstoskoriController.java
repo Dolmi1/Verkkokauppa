@@ -35,6 +35,7 @@ public class OstoskoriController {
             ostoskori.setTuoteNimi(tuote.getName());
             ostoskori.setTuoteHinta(tuote.getPrice());
             ostoskori.setTuoteMaara(1);
+            ostoskori.setProductId(tuote.getId());
             ostoskoriRepository.save(ostoskori);
         }
         return "redirect:/ostoskori";
@@ -45,4 +46,29 @@ public class OstoskoriController {
         ostoskoriRepository.deleteById(id);
         return "redirect:/ostoskori";
     }
+
+    @PostMapping("/osta-tuotteet")
+public String ostaTuotteet(Model model) {
+    List<Ostoskori> ostoskoriList = ostoskoriRepository.findAll();
+    
+    for (Ostoskori ostoskori : ostoskoriList) {
+        Long productId = ostoskori.getProductId();
+        
+        if (productId != null) {
+            Tuote tuote = tuoteRepository.findById(productId).orElse(null);
+            
+            if (tuote != null && tuote.getQuantity() >= ostoskori.getTuoteMaara()) {
+                tuote.setQuantity(tuote.getQuantity() - ostoskori.getTuoteMaara());
+                tuoteRepository.save(tuote);
+            } else {
+                continue;
+            }
+        } else {
+            continue;
+        }
+        
+        ostoskoriRepository.deleteById(ostoskori.getId());
+    }
+    return "redirect:/ostoskori";
+}
 }
