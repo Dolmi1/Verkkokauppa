@@ -8,21 +8,21 @@ public class PageController {
 
     @GetMapping("/")
     public String index() {
-        return "index"; // Palauttaa index.html -sivun
+        return "index";
     }
 
     @GetMapping("/about")
     public String about() {
-        return "about"; // Palauttaa about.html -sivun
+        return "about";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // Palauttaa login.html -sivun
+        return "login";
     }
 
     @GetMapping("/register")
     public String register() {
-        return "register"; // Palauttaa register.html -sivun
+        return "register";
     }
 }

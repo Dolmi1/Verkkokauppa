@@ -19,14 +19,12 @@ public class TuoteController {
         this.productService = productService;
     }
 
-    // Endpoint to add a new product
     @PostMapping
     public String addProduct(@ModelAttribute("tuote") Tuote product) {
         productService.addProduct(product);
         return "redirect:/tuoteSivu";
     }
 
-    // Endpoint to get all products
     @GetMapping
     public String getAllProducts(Model model) {
         List<Tuote> products = productService.findAllProducts();
@@ -42,18 +40,16 @@ public class TuoteController {
             model.addAttribute("product", productOptional.get());
             return "tuoteSivu";
         } else {
-            return "notFound"; // Create a notFound.html page or redirect to an appropriate error page
+            return "notFound";
         }
     }
 
-    // Endpoint to update a product
     @PutMapping("/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute("tuote") Tuote product) {
         productService.updateProduct(id, product);
         return "redirect:/tuoteSivu";
     }
 
-    // Endpoint to delete a product
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);

@@ -24,7 +24,6 @@
         </ul>
     </nav>
 
-    <!-- Näytä tuotteet -->
     <div th:if="${not #lists.isEmpty(products)}">
         <h2>Tuotteet</h2>
         <ul>
@@ -34,8 +33,7 @@
                 <p><strong>Hinta:</strong> <span th:text="${product.price}"></span></p>
                 <p><strong>Määrä:</strong> <span th:text="${product.quantity}"></span></p>
                 
-                <!-- Lisää ostoskorin lisäämisnappi -->
-                <form action="/ostoskori/lisaa-tuote" method="post" enctype="application/x-www-form-urlencoded">   <!-- Tiedonsiirron tyyppi on määritetty application/x-www-form-urlencoded -muotoon -->
+                <form action="/ostoskori/lisaa-tuote" method="post" enctype="application/x-www-form-urlencoded">
                     <input type="hidden" name="tuoteId" th:value="${product.productId}">
                     <button type="submit">Lisää ostoskoriin</button>
                 </form>

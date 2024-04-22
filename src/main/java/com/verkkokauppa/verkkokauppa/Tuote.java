@@ -16,11 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Tuote extends AbstractPersistable<Long>{
 
-    /*Tuotetiedot*/
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false) // Tämä rivi määrittelee productId-kentän pakolliseksi
-    private Long productId; // Changed to Long
+    @Column(nullable = false)
+    private Long productId;
 
     private String name;
 
